@@ -4,15 +4,17 @@ library("msdata") ## the data package
 
 #####################
 ##### Variables #####
-sequence<-'SYFPEITHI' #Peptide Sequence of Interest
-n<-	1                 #Spectrum Number (=1 if extracted spectra)
-label_pos<-2          #labelled residue index eg. Y in SYFPEITHI example
-label_weigth<-1
-ftol<-0.02
+
+sequence<-'SYFPEITHI' # Peptide Sequence of Interest
+n<-	1                 # Spectrum Number (=1 if extracted spectra)
+label_pos<-2          # Labelled residue index eg. Y in SYFPEITHI example
+label_weigth<-1       # Mass delta of isotope label eg. +1
+ftol<-0.5             # fragment tolerance in Dalton for assigning y, b, z and c ions
 
 
 ######################
 #####  Functions #####
+
 cos.sim <- function(A,B)
 {
   return( sum(A*B)/sqrt(sum(A^2)*sum(B^2)) )
