@@ -2,7 +2,8 @@ library(protViz)
 library("mzR") ## the software package
 library("msdata") ## the data package
 
-
+#####################
+##### Variables #####
 sequence<-'SRFLSQLDK'
 n<-	1
 label_pos<-5
@@ -11,6 +12,15 @@ ftol<-0.02
 
 
 ######################
+#####  Functions #####
+cos.sim <- function(A,B)
+{
+  return( sum(A*B)/sqrt(sum(A^2)*sum(B^2)) )
+}
+
+######################
+#####    Main    #####
+
 #read measured spectra
 file <- '/Users/bichmann/Projects/synpeptides/SRFLSQLDK_Mel15.mzML'
 mz <- openMSfile(file)
@@ -70,5 +80,5 @@ tfs<-cbind(plot$fragmentIon, fs)
 plot<-peakplot(sequence,spec=p, ion.axes = F, fi = tfs, itol = ftol)
 Ints_synthesized<-p$intensity[plot$idx]
 
-#compute correlation
-cor(Ints_measured,Ints_synthesized)
+#compute cosine similarity
+cos.sim(Ints_measured,Ints_synthesized)
