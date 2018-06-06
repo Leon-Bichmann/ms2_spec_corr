@@ -4,9 +4,9 @@ library("msdata") ## the data package
 
 #####################
 ##### Variables #####
-sequence<-'SRFLSQLDK'
-n<-	1
-label_pos<-5
+sequence<-'SYFPEITHI' #Peptide Sequence of Interest
+n<-	1                 #Spectrum Number (=1 if extracted spectra)
+label_pos<-2          #labelled residue index eg. Y in SYFPEITHI example
 label_weigth<-1
 ftol<-0.02
 
@@ -22,7 +22,7 @@ cos.sim <- function(A,B)
 #####    Main    #####
 
 #read measured spectra
-file <- '/Users/bichmann/Projects/synpeptides/SRFLSQLDK_Mel15.mzML'
+file <- '/Users/bichmann/Projects/synpeptides/SYFPEITHI.mzML'
 mz <- openMSfile(file)
 h<-header(mz)
 spec_nr<-which((h$acquisitionNum==n) & (h$msLevel==2))
@@ -59,7 +59,7 @@ Ints_measured<-p$intensity[plot$idx]
 
 #########################
 #read synthesized spectra
-file <- '/Users/bichmann/Projects/synpeptides/SRFLSQLDK_syn_HCD.mzML'
+file <- '/Users/bichmann/Projects/synpeptides/SYFPEITHI_syn_HCD.mzML'
 mz <- openMSfile(file)
 h<-header(mz)
 spec_nr<-which((h$acquisitionNum==n) & (h$msLevel==2))
