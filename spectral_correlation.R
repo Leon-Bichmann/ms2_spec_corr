@@ -5,15 +5,15 @@ library("msdata") ## the data package
 #####################
 ##### Variables #####
 
-sequence<-'RQLGEVASF' # Peptide Sequence of Interest
+sequence<-'ESVGLTTAR' # Peptide Sequence of Interest
 n<-	1                 # Spectrum Number (=1 if extracted spectra)
-label_pos<-8          # Labelled residue index eg. Y in SYFPEITHI example
-label_weigth<-0       # Mass delta of isotope label eg. +1
+label_pos<- 7         # Labelled residue index eg. Y in SYFPEITHI example
+label_weigth<-5       # Mass delta of isotope label eg. +1
 ftol<-0.02             # fragment tolerance in Dalton for assigning y, b, z and c ions
 
-scan=8155
-scan_2=11492
-scan_3=8718
+scan=4833
+scan_2=3738
+#scan_3=8718
 
 ######################
 #####  Functions #####
@@ -27,16 +27,16 @@ cos.sim <- function(A,B)
 mass_shift <- function(plot, sequence, label_pos, label_weigth)
 {
   #mass shift b and c ions
-  plot$fragmentIon["b"][label_pos:nchar(sequence),]<-plot$fragmentIon["b"][label_pos:nchar(sequence),]+label_weigth
-  plot$fragmentIon["c"][label_pos:nchar(sequence),]<-plot$fragmentIon["c"][label_pos:nchar(sequence),]+label_weigth
-  plot$fragmentIon["b+"][label_pos:nchar(sequence),]<-plot$fragmentIon["b+"][label_pos:nchar(sequence),]+label_weigth/2
-  plot$fragmentIon["c+"][label_pos:nchar(sequence),]<-plot$fragmentIon["c+"][label_pos:nchar(sequence),]+label_weigth/2
+  plot$fragmentIon["b+"][label_pos:nchar(sequence),]<-plot$fragmentIon["b+"][label_pos:nchar(sequence),]+label_weigth
+  plot$fragmentIon["c+"][label_pos:nchar(sequence),]<-plot$fragmentIon["c+"][label_pos:nchar(sequence),]+label_weigth
+  plot$fragmentIon["b"][label_pos:nchar(sequence),]<-plot$fragmentIon["b"][label_pos:nchar(sequence),]+label_weigth/2
+  plot$fragmentIon["c"][label_pos:nchar(sequence),]<-plot$fragmentIon["c"][label_pos:nchar(sequence),]+label_weigth/2
   
   #mass shift y and z ions
-  plot$fragmentIon["y"][(nchar(sequence)-(label_pos-1)):nchar(sequence),]<-plot$fragmentIon["y"][(nchar(sequence)-(label_pos-1)):nchar(sequence),]+label_weigth
-  plot$fragmentIon["z"][(nchar(sequence)-(label_pos-1)):nchar(sequence),]<-plot$fragmentIon["z"][(nchar(sequence)-(label_pos-1)):nchar(sequence),]+label_weigth
-  plot$fragmentIon["y+"][(nchar(sequence)-(label_pos-1)):nchar(sequence),]<-plot$fragmentIon["y+"][(nchar(sequence)-(label_pos-1)):nchar(sequence),]+label_weigth/2
-  plot$fragmentIon["z+"][(nchar(sequence)-(label_pos-1)):nchar(sequence),]<-plot$fragmentIon["z+"][(nchar(sequence)-(label_pos-1)):nchar(sequence),]+label_weigth/2
+  plot$fragmentIon["y+"][(nchar(sequence)-(label_pos-1)):nchar(sequence),]<-plot$fragmentIon["y+"][(nchar(sequence)-(label_pos-1)):nchar(sequence),]+label_weigth
+  plot$fragmentIon["z+"][(nchar(sequence)-(label_pos-1)):nchar(sequence),]<-plot$fragmentIon["z+"][(nchar(sequence)-(label_pos-1)):nchar(sequence),]+label_weigth
+  plot$fragmentIon["y"][(nchar(sequence)-(label_pos-1)):nchar(sequence),]<-plot$fragmentIon["y"][(nchar(sequence)-(label_pos-1)):nchar(sequence),]+label_weigth/2
+  plot$fragmentIon["z"][(nchar(sequence)-(label_pos-1)):nchar(sequence),]<-plot$fragmentIon["z"][(nchar(sequence)-(label_pos-1)):nchar(sequence),]+label_weigth/2
   
   return(plot)
 }
@@ -47,7 +47,7 @@ mass_shift <- function(plot, sequence, label_pos, label_weigth)
 #read synthesized spectra
 #file <- '/Users/bichmann/Projects/Melanoma_MZML/ETLKPGTCVKR_syn_HCD.mzML'
 #file <-'/Users/bichmann/Downloads/170915_AM_BD-ZH09_Prostate_W_8%_DDA_#1_400-650mz_msms25.mzML'
-file <-'/Users/bichmann/Downloads/161115_AM_BD-ZH08_Colon_W_10%_DDA_#3_400-650mz_msms37.mzML'
+file <-'/Users/bichmann/Downloads/200211_AM_42isotopelabeled_crypticSynpeps_AbQc_20fmol-ul_DDA#1_msms30.mzML'
 mz <- openMSfile(file)
 h<-header(mz)
 spec_nr<-which((h$acquisitionNum==scan) & (h$msLevel==2))
@@ -75,7 +75,7 @@ labels<-plot$label[which(plot$mZ.Da.error<ftol & plot$mZ.Da.error>-ftol)]
 #########################
 #read measured spectra
 #file <- '/Users/bichmann/Projects/synpeptides/FVPPTAISHF_Mel15.mzML'
-file <-'/Users/bichmann/Downloads/170407_AM_BD-ZH12_Lung_W_10%_DDA_#1new_400-650mz_msms50.mzML'
+file <-'/Users/bichmann/Downloads/161115_AM_BD-ZH08_Colon_W_10%_DDA_#3_400-650mz_msms37.mzML'
 
 mz <- openMSfile(file)
 h<-header(mz)
